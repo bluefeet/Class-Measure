@@ -2,7 +2,8 @@ Changes
 MANIFEST
 README
 Build.PL
+META.yml
 lib/Class/Measure.pm
 lib/Class/Measure/Length.pm
-t/00_class.t
+t/00_measure.t
 t/01_length.t

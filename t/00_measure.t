@@ -47,24 +47,43 @@ ok( (@$path==2), 'one step path' );
 my $m = MeasureTest->new( 3, 'inch' );
 
 $m += 2;
-ok( ($m->value==5), '+= worked' );
+ok( ($m->value==5), 'obj += num' );
 $m ++;
-ok( ($m->value==6), '++ worked' );
+ok( ($m->value==6), 'obj ++' );
 $m = 2 + $m;
-ok( ($m->value==8), 'n + obj worked' );
+ok( ($m->value==8), 'obj = num + obj' );
 $m = $m + MeasureTest->new( 1, 'foot');
-ok( ($m->value==20), 'obj + obj' );
+ok( ($m->value==20), 'obj = obj + obj' );
 
 $m -= 2;
-ok( ($m->value==18), '-= worked' );
+ok( ($m->value==18), 'obj -= num' );
 $m --;
-ok( ($m->value==17), '-- worked' );
+ok( ($m->value==17), 'obj --' );
 $m = 30 - $m;
-ok( ($m->value==13), 'n - obj worked' );
+ok( ($m->value==13), 'obj = num - obj' );
 $m = $m - MeasureTest->new( 1, 'foot' );
-ok( ($m->value==1), 'obj - obj' );
+ok( ($m->value==1), 'obj = obj - obj' );
+
+$m->set_value( 2, 'foot' );
+$m *= 2;
+ok( ($m->value==4), 'obj *= num' );
+$m = 3 * MeasureTest->new( 2, 'inch' );
+ok( ($m->value==6), 'obj = num * obj' );
+$m = MeasureTest->new( 3, 'inch' ) * 3;
+ok( ($m->value==9), 'obj = obj * num' );
+
+$m->set_value( 10, 'foot' );
+$m /= 2;
+ok( ($m->value==5), 'obj /= num' );
+$m = 10 / MeasureTest->new( 5, 'inch' );
+ok( ($m->value==2), 'obj = num / obj' );
+$m = MeasureTest->new( 6, 'inch' ) / 2;
+ok( ($m->value==3), 'obj = obj / num' );
 
 $m->set_value( 1, 'foot' );
 ok( ($m->inches==12), 'autoloaded conversion (inches)' );
 ok( (int($m->yards*10)==3), 'autoloaded conversion (yards)' );
+
+eval{ return "$m" };
+ok( !$@, 'stringified' );
 

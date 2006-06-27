@@ -15,6 +15,7 @@ Class::Measure::Length - Calculate measurements of length.
 #------------------------------------------------
 use strict;
 use warnings;
+our $VERSION = '0.02';
 
 use base qw( Class::Measure Exporter );
 our @EXPORT = qw( length );

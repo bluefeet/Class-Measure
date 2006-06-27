@@ -8,23 +8,16 @@ Class::Measure - Create, compare, and convert units of measurement.
 
 =head1 SYNOPSIS
 
-  use Class::Measure::Length;
-  
-  my $one = length( 2, 'a_unit' );
-  my $two = example( 5, 'b_unit' );
-  
-  my $three = $one + $two;
-  $one++;
-  print "The \$one variable contains $one ".$one->unit;
+See L<Class::Measure::Length> for some examples.
 
 =head1 DESCRIPTION
 
 This is a base class that is inherited by the Class::Measure 
 classes.  This distribution comes with the class L<Class::Measure::Length>. 
-The classes L<Class::Measure::Area>, 
-L<Class::Measure::Length>, L<Class::Measure::Mass>, L<Class::Measure::Space>, 
-L<Class::Measure::Temperature>, and L<Class::Measure::Volume> are planned 
-and will be added soon.
+
+The classes L<Class::Measure::Area>, L<Class::Measure::Mass>, 
+L<Class::Measure::Space>, L<Class::Measure::Temperature>, 
+and L<Class::Measure::Volume> are planned and will be added soon.
 
 The methods described here are available in all Class::Measure classes.
 
@@ -33,13 +26,16 @@ The methods described here are available in all Class::Measure classes.
 #------------------------------------------------
 use strict;
 use warnings;
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 our $AUTOLOAD;
 
 use Carp;
 use Data::Dumper;
 
-use overload '+'=>\&_ol_add, '-'=>\&_ol_sub, '""'=>\&value;
+use overload 
+    '+'=>\&_ol_add, '-'=>\&_ol_sub, 
+    '*'=>\&_ol_mult, '/'=>\&_ol_div,
+    '""'=>\&_ol_str;
 
 our $type_convs = {};
 our $type_paths = {};
@@ -468,6 +464,64 @@ sub _ol_sub {
         $two->set_value( $one - $two->value );
         return $two;
     }
+}
+#------------------------------------------------
+
+=head2 _ol_mult
+
+Multiplication overloader.
+
+=cut
+
+#------------------------------------------------
+sub _ol_mult {
+    my($one,$two,$opt) = @_;
+    if($opt){ my $tmp=$one; $one=$two; $two=$tmp; }
+    if( ref($two) and ref($one) ){
+        croak('You cannot multiply two measure classes');
+    }elsif( ref $one ){
+        $one->set_value( $one->value * $two );
+        return $one;
+    }elsif( ref $two ){
+        $two->set_value( $one * $two->value );
+        return $two;
+    }
+}
+#------------------------------------------------
+
+=head2 _ol_div
+
+Division overloader.
+
+=cut
+
+#------------------------------------------------
+sub _ol_div {
+    my($one,$two,$opt) = @_;
+    if($opt){ my $tmp=$one; $one=$two; $two=$tmp; }
+    if( ref($two) and ref($one) ){
+        croak('You cannot divide one measure class by another');
+    }elsif( ref $one ){
+        $one->set_value( $one->value / $two );
+        return $one;
+    }elsif( ref $two ){
+        $two->set_value( $one / $two->value );
+        return $two;
+    }
+}
+#------------------------------------------------
+
+=head2 _ol_str
+
+Overloads the stringification of this object by 
+calling and returning the response of value().
+
+=cut
+
+#------------------------------------------------
+sub _ol_str {
+    my $self = shift;
+    return $self->value;
 }
 #------------------------------------------------
 
