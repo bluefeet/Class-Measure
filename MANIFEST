@@ -1,0 +1,8 @@
+Changes
+MANIFEST
+README
+Build.PL
+lib/Class/Measure.pm
+lib/Class/Measure/Length.pm
+t/00_class.t
+t/01_length.t
