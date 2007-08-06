@@ -15,7 +15,6 @@ Class::Measure::Length - Calculate measurements of length.
 #------------------------------------------------
 use strict;
 use warnings;
-our $VERSION = '0.02';
 
 use base qw( Class::Measure Exporter );
 our @EXPORT = qw( length );
@@ -177,18 +176,21 @@ __PACKAGE__->reg_convs(
 =head2 Other
 
   light_second
+  nautical_mile
 
 =cut
 
 #------------------------------------------------
 __PACKAGE__->reg_units(
-    qw( light_second )
+    qw( light_second nautical_mile )
 );
 __PACKAGE__->reg_aliases(
-    'light_seconds' => 'light_second',
+    'light_seconds'  => 'light_second',
+    'nautical_miles' => 'nautical_mile',
 );
 __PACKAGE__->reg_convs(
-    'light_second' => 299792458, 'm',
+    'light_second'  => 299792458, 'm',
+    'nautical_mile' => 1852, 'm',
 );
 #------------------------------------------------
 

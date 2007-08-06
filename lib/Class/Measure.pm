@@ -26,7 +26,7 @@ The methods described here are available in all Class::Measure classes.
 #------------------------------------------------
 use strict;
 use warnings;
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 our $AUTOLOAD;
 
 use Carp;

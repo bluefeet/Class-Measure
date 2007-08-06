@@ -1,6 +1,6 @@
 ---
 name: Class-Measure
-version: 0.02
+version: 0.03
 author: 'Aran Clary Deltac'
 abstract: 'Create, compare, and convert units of measurement.'
 license: perl
@@ -9,8 +9,7 @@ requires:
 provides:
   Class::Measure:
     file: lib/Class/Measure.pm
-    version: 0.02
+    version: 0.03
   Class::Measure::Length:
     file: lib/Class/Measure/Length.pm
-    version: 0.02
 generated_by: Module::Build version 0.2611
