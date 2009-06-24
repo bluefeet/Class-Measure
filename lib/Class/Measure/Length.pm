@@ -1,6 +1,4 @@
-# vim: ts=8:sw=4:sts=4:et
 package Class::Measure::Length;
-#------------------------------------------------
 
 =head1 NAME
 
@@ -12,13 +10,14 @@ Class::Measure::Length - Calculate measurements of length.
 
 =cut
 
-#------------------------------------------------
 use strict;
 use warnings;
 
-use base qw( Class::Measure Exporter );
-our @EXPORT = qw( length );
-#------------------------------------------------
+use base qw( Class::Measure );
+
+use Sub::Exporter -setup => {
+    exports => [qw( length )]
+};
 
 =head1 METHODS
 
@@ -33,9 +32,7 @@ Creates a new measurement object.
 
 =cut
 
-#------------------------------------------------
 sub length { return __PACKAGE__->new(@_); }
-#------------------------------------------------
 
 =head1 UNITS
 
@@ -57,7 +54,6 @@ And all veriations are aliased, such as "m", "meter",
 
 =cut
 
-#------------------------------------------------
 __PACKAGE__->reg_units(
     qw( kilometre centimetre millimetre decimetre micrometre nanometre metre )
 );
@@ -78,7 +74,6 @@ __PACKAGE__->reg_convs(
     1000, 'microns' => 'mm',
     1000, 'nanometers' => 'micron',
 );
-#------------------------------------------------
 
 =head2 Shared
 
@@ -97,7 +92,6 @@ All relevant aliases included.
 
 =cut
 
-#------------------------------------------------
 __PACKAGE__->reg_units(
     qw( inch foot yard rod mile chain furlong )
 );
@@ -121,7 +115,6 @@ __PACKAGE__->reg_convs(
     'chain' => 66, 'feet',
     'furlong' => 10, 'chains',
 );
-#------------------------------------------------
 
 =head2 United Stats
 
@@ -136,7 +129,6 @@ Aliases included.
 
 =cut
 
-#------------------------------------------------
 __PACKAGE__->reg_units(
     qw( survey_mile link fathom cable_length )
 );
@@ -152,7 +144,6 @@ __PACKAGE__->reg_convs(
     'fathom' => 6, 'feet',
     'cable_length' => 123, 'fathoms',
 );
-#------------------------------------------------
 
 =head2 Imperial
 
@@ -161,7 +152,6 @@ in this set is "league".
 
 =cut
 
-#------------------------------------------------
 __PACKAGE__->reg_units(
     qw( league )
 );
@@ -171,7 +161,6 @@ __PACKAGE__->reg_aliases(
 __PACKAGE__->reg_convs(
     'league' => 3, 'miles',
 );
-#------------------------------------------------
 
 =head2 Other
 
@@ -180,7 +169,6 @@ __PACKAGE__->reg_convs(
 
 =cut
 
-#------------------------------------------------
 __PACKAGE__->reg_units(
     qw( light_second nautical_mile )
 );
@@ -192,19 +180,14 @@ __PACKAGE__->reg_convs(
     'light_second'  => 299792458, 'm',
     'nautical_mile' => 1852, 'm',
 );
-#------------------------------------------------
 
-=head1 TODO/BUGS/SUPPORT
-
-See L<http://www.arandeltac.com/ClassMeasureModule>.
+1;
 
 =head1 AUTHOR
 
-Copyright (c) 2005 Aran Clary Deltac
+Aran Clary Deltac <bluefeet@cpan.org>
+
+=head1 LICENSE
 
 This library is free software; you can redistribute it and/or modify it under the same terms as Perl itself.
 
-=cut
-
-#------------------------------------------------
-1;

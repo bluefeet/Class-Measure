@@ -1,5 +1,10 @@
 Revision history for Perl extension Class::Measure.
 
+0.04
+ - Fix tests to declare the number of test first and to not use lib.
+ - Remove AUTOLOAD.  Slap me please.
+ - Other random cleanups.
+
 0.03
  - Added nautical_mile length unit type.
 

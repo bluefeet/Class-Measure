@@ -1,10 +1,10 @@
-# vim: ts=8:sw=4:sts=4:et
 use strict;
 use warnings;
 
-use lib 'lib';
-use Test::More 'no_plan';
-use_ok('Class::Measure');
+use Test::More tests => 24;
+BEGIN{
+    use_ok('Class::Measure');
+}
 
 eval{ Class::Measure->new };
 ok( $@, 'cannot create from base class' );

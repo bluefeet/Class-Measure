@@ -1,6 +1,4 @@
-# vim: ts=8:sw=4:sts=4:et
 package Class::Measure;
-#------------------------------------------------
 
 =head1 NAME
 
@@ -23,14 +21,12 @@ The methods described here are available in all Class::Measure classes.
 
 =cut
 
-#------------------------------------------------
 use strict;
 use warnings;
-our $VERSION = '0.03';
-our $AUTOLOAD;
 
-use Carp;
-use Data::Dumper;
+our $VERSION = '0.04';
+
+use Carp qw( croak );
 
 use overload 
     '+'=>\&_ol_add, '-'=>\&_ol_sub, 
@@ -40,7 +36,6 @@ use overload
 our $type_convs = {};
 our $type_paths = {};
 our $type_aliases = {};
-#------------------------------------------------
 
 =head1 METHODS
 
@@ -58,7 +53,6 @@ length() method.
 
 =cut
 
-#------------------------------------------------
 sub new {
     my $class = shift;
     $class = ref($class) || $class;
@@ -68,7 +62,6 @@ sub new {
     $self->set_value( @_ );
     return $self;
 }
-#------------------------------------------------
 
 =head2 unit
 
@@ -78,12 +71,10 @@ Returns the object's default unit.
 
 =cut
 
-#------------------------------------------------
 sub unit {
     my $self = shift;
     return $self->{unit};
 }
-#------------------------------------------------
 
 =head2 set_unit
 
@@ -93,14 +84,12 @@ Sets the default unit of the measurement.
 
 =cut
 
-#------------------------------------------------
 sub set_unit {
     my $self = shift;
     my $unit = $self->_unalias( shift );
     $self->_conv( $unit );
     $self->{unit} = $unit;
 }
-#------------------------------------------------
 
 =head2 value
 
@@ -117,7 +106,6 @@ stringifying the object.
 
 =cut
 
-#------------------------------------------------
 sub value {
     my $self = shift;
     if( @_ ){
@@ -125,7 +113,6 @@ sub value {
     }
     return $self->{values}->{$self->{unit}};
 }
-#------------------------------------------------
 
 =head2 set_value
 
@@ -138,13 +125,11 @@ specify a new default unit as well.
 
 =cut
 
-#------------------------------------------------
 sub set_value {
     my $self = shift;
     $self->{unit} = $self->_unalias(pop @_) if( @_>1 );
     $self->{values} = { $self->{unit} => shift };
 }
-#------------------------------------------------
 
 =head2 reg_units
 
@@ -158,17 +143,23 @@ form.
 
 =cut
 
-#------------------------------------------------
 sub reg_units {
     my $self = shift;
     my $class = ref($self) || $self;
     my $convs = $type_convs->{$class} ||= {};
     foreach my $unit (@_){
         if( defined $convs->{$unit} ){ croak('This unit has already been defined'); }
+        eval('*' . $class . '::' . $unit. ' = sub{
+            my ($self, $value) = @_;
+            if (defined $value) {
+                $self->set_value( $value, $unit );
+            } else {
+                return $self->value( $unit );
+            }
+        }');
         $convs->{$unit} = {};
     }
 }
-#------------------------------------------------
 
 =head2 units
 
@@ -178,13 +169,11 @@ Returns a list of all registered units.
 
 =cut
 
-#------------------------------------------------
 sub units {
     my $self = shift;
     my $class = ref($self) || $self;
     return keys(%{$type_convs->{$class}});
 }
-#------------------------------------------------
 
 =head2 reg_aliases
 
@@ -201,7 +190,6 @@ the second argument being the unit to alias them to.
 
 =cut
 
-#------------------------------------------------
 sub reg_aliases {
     my $self = shift;
     my $class = ref($self) || $self;
@@ -214,10 +202,13 @@ sub reg_aliases {
         foreach my $alias (@aliases){
             if( defined $aliases->{$alias} ){ croak('Alias already in use'); }
             $aliases->{$alias} = $unit;
+            eval('*' . $class . '::' . $alias. ' = sub{
+                my ($self, $value) = @_;
+                return $self->$unit($value);
+            }');
         }
     }
 }
-#------------------------------------------------
 
 =head2 reg_convs
 
@@ -246,7 +237,6 @@ third syntax does not create a reverse conversion automatically.
 
 =cut
 
-#------------------------------------------------
 sub reg_convs {
     my $self = shift;
     croak('Wrong number of arguments (must be a multiple of three)') if( (@_+0) % 3 );
@@ -275,23 +265,7 @@ sub reg_convs {
     }
     $type_paths->{$class} = {};
 }
-#------------------------------------------------
 
-=head1 PRIVATE METHODS
-
-These methods are used internally and should only 
-be useful to authors of Class::Measure classes.
-
-=head2 _unalias
-
-Accepts a single name either returns the name if it 
-is the name of a unit, returns the name of the unit 
-that it aliases to, or throws an error if neither a 
-matching alias or matching unit was found.
-
-=cut
-
-#------------------------------------------------
 sub _unalias {
     my $self = shift;
     my $class = ref($self) || $self;
@@ -299,19 +273,7 @@ sub _unalias {
     return $unit if( defined $type_convs->{$class}->{$unit} );
     return $type_aliases->{$class}->{$unit} || croak('Unkown unit or alias "'.$unit.'"');
 }
-#------------------------------------------------
 
-=head2 _conv
-
-Returns the current value as converted to the 
-specified unit.  Any values that are converted 
-are cached so that proceeding calls that might 
-require the value in the same unit.  If the value 
-is ever changed then the value cache is cleared.
-
-=cut
-
-#------------------------------------------------
 sub _conv {
     my $self = shift;
     my $class = ref($self) || $self;
@@ -334,24 +296,7 @@ sub _conv {
     }
     return $value;
 }
-#------------------------------------------------
 
-=head2 _path
-
-  my $path = $m->_path(
-    'inch',
-    'yard'
-  );
-  # $path = ['inch','foot','yard']
-
-Figures out the best conversion path for converting 
-from the first unit to the second.  Any paths that 
-are created are cached for proceding calls that 
-might need to get the same path.
-
-=cut
-
-#------------------------------------------------
 sub _path {
     my $self = shift;
     my $from = $self->_unalias(shift);
@@ -360,7 +305,7 @@ sub _path {
     my $key = "$from-$to";
     my $paths = $type_paths->{$class} ||= {};
     if( defined $paths->{$key} ){ return [@{$paths->{$key}}]; }
-    
+
     my $units = $type_convs->{$class} ||= {};
     my $path;
     foreach (1..10){
@@ -371,16 +316,7 @@ sub _path {
     $paths->{$key} = $path;
     return [@$path];
 }
-#------------------------------------------------
 
-=head2 _find_path
-
-Used by _path for recursively finding the best 
-path for a conversion.
-
-=cut
-
-#------------------------------------------------
 sub _find_path {
     my($level,$to,$units) = splice(@_,0,3);
     unless( ref $level ){ $level=[$level]; }
@@ -395,10 +331,10 @@ sub _find_path {
             return $path;
         }
     }
-    
+
     return 0 if( $depth+1 == $max_depth );
     $depth ++;
-    
+
     foreach my $unit (@$level){
         push @$path, $unit;
         if(_find_path( [keys %{$units->{$unit}}], $to, $units, $max_depth, $depth, $path )){
@@ -407,24 +343,11 @@ sub _find_path {
         }
         pop @$path;
     }
-    
+
     $depth --;
     return 0;
 }
-#------------------------------------------------
 
-=head2 _ol_add
-
-  $m = length(2,'inches') + length(1,'foot'); # 14 inches
-  $m++; # 15 inches
-  $m += length(3,'inches'); # 18 inches
-
-This method handles the overloading of addition 
-logic, such as +, +=, and ++.
-
-=cut
-
-#------------------------------------------------
 sub _ol_add {
     my($one,$two,$opt) = @_;
     if($opt){ my $tmp=$one; $one=$two; $two=$tmp; }
@@ -440,16 +363,7 @@ sub _ol_add {
         return $two;
     }
 }
-#------------------------------------------------
 
-=head2 _ol_sub
-
-This method is the same as _ol_add, but works on 
-subtraction.
-
-=cut
-
-#------------------------------------------------
 sub _ol_sub {
     my($one,$two,$opt) = @_;
     if($opt){ my $tmp=$one; $one=$two; $two=$tmp; }
@@ -465,15 +379,7 @@ sub _ol_sub {
         return $two;
     }
 }
-#------------------------------------------------
 
-=head2 _ol_mult
-
-Multiplication overloader.
-
-=cut
-
-#------------------------------------------------
 sub _ol_mult {
     my($one,$two,$opt) = @_;
     if($opt){ my $tmp=$one; $one=$two; $two=$tmp; }
@@ -487,15 +393,7 @@ sub _ol_mult {
         return $two;
     }
 }
-#------------------------------------------------
 
-=head2 _ol_div
-
-Division overloader.
-
-=cut
-
-#------------------------------------------------
 sub _ol_div {
     my($one,$two,$opt) = @_;
     if($opt){ my $tmp=$one; $one=$two; $two=$tmp; }
@@ -509,62 +407,19 @@ sub _ol_div {
         return $two;
     }
 }
-#------------------------------------------------
 
-=head2 _ol_str
-
-Overloads the stringification of this object by 
-calling and returning the response of value().
-
-=cut
-
-#------------------------------------------------
 sub _ol_str {
     my $self = shift;
     return $self->value;
 }
-#------------------------------------------------
 
-=head2 AUTOLOAD
-
-  # Same as get_value('feet').
-  my $feet = $m->feet;
-  
-  # Same as set_value(2,'feet').
-  $m->feet(2);
-
-Retrieve and set the leangth of measurement.
-
-=cut
-
-#------------------------------------------------
-sub DESTROY {}
-sub AUTOLOAD {
-    my $self = shift;
-    my $unit = $self->_unalias( ( $AUTOLOAD =~ /([^:]+)$/ )[0] );
-    if(@_){
-        $self->set_value( shift, $unit );
-    }else{
-        return $self->value( $unit );
-    }
-}
-#------------------------------------------------
-
-=head1 SUBCLASSING
-
-Its straight-forward, see L<Class::Measure::Length> for a simple and complete example.
-
-=head1 TODO/BUGS/SUPPORT
-
-See L<http://www.arandeltac.com/ClassMeasureModule>.
+1;
 
 =head1 AUTHOR
 
-Copyright (c) 2005 Aran Clary Deltac
+Aran Clary Deltac <bluefeet@cpan.org>
+
+=head1 LICENSE
 
 This library is free software; you can redistribute it and/or modify it under the same terms as Perl itself.
 
-=cut
-
-#------------------------------------------------
-1;
