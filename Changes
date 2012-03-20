@@ -1,5 +1,8 @@
 Revision history for Perl extension Class::Measure.
 
+{{$NEXT}}
+ - Use Dist::Zilla for packaging up the distro.
+
 0.04
  - Fix tests to declare the number of test first and to not use lib.
  - Remove AUTOLOAD.  Slap me please.
