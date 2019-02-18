@@ -1,6 +1,6 @@
 package Class::Measure;
 
-$Class::Measure::VERSION = '0.05';
+$Class::Measure::VERSION = '0.06';
 
 =head1 NAME
 
