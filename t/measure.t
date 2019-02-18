@@ -1,10 +1,9 @@
+#!/usr/bin/env perl
 use strict;
 use warnings;
+use Test2::V0;
 
-use Test::More tests => 24;
-BEGIN{
-    use_ok('Class::Measure');
-}
+use Class::Measure;
 
 eval{ Class::Measure->new };
 ok( $@, 'cannot create from base class' );
@@ -87,3 +86,4 @@ ok( (int($m->yards*10)==3), 'autoloaded conversion (yards)' );
 eval{ return "$m" };
 ok( !$@, 'stringified' );
 
+done_testing;

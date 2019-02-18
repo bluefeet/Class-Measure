@@ -1,10 +1,9 @@
+#!/usr/bin/env perl
 use strict;
 use warnings;
+use Test2::V0;
 
-use Test::More tests => 5;
-BEGIN{
-    use_ok('Class::Measure::Length', 'length');
-}
+use Class::Measure::Length qw( length );
 
 my @units = sort Class::Measure::Length->units;
 my $first = shift(@units);
@@ -21,3 +20,4 @@ my $yard = $foot * 3;
 is( $yard->yards(), 1, '3 feet is 1 yard' );
 is( $yard->inches(), 36, '1 yard is 36 inches' );
 
+done_testing;

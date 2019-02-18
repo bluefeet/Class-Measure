@@ -1,53 +1,53 @@
-=head1 NAME
+# NAME
 
 Class::Measure - Create, compare, and convert units of measurement.
 
-=head1 SYNOPSIS
+# SYNOPSIS
 
-See L<Class::Measure::Length> for some examples.
+See [Class::Measure::Length](https://metacpan.org/pod/Class::Measure::Length) for some examples.
 
-=head1 DESCRIPTION
+# DESCRIPTION
 
 This is a base class that is inherited by the Class::Measure 
-classes.  This distribution comes with the class L<Class::Measure::Length>. 
+classes.  This distribution comes with the class [Class::Measure::Length](https://metacpan.org/pod/Class::Measure::Length). 
 
-The classes L<Class::Measure::Area>, L<Class::Measure::Mass>, 
-L<Class::Measure::Space>, L<Class::Measure::Temperature>, 
-and L<Class::Measure::Volume> are planned and will be added soon.
+The classes [Class::Measure::Area](https://metacpan.org/pod/Class::Measure::Area), [Class::Measure::Mass](https://metacpan.org/pod/Class::Measure::Mass), 
+[Class::Measure::Space](https://metacpan.org/pod/Class::Measure::Space), [Class::Measure::Temperature](https://metacpan.org/pod/Class::Measure::Temperature), 
+and [Class::Measure::Volume](https://metacpan.org/pod/Class::Measure::Volume) are planned and will be added soon.
 
 The methods described here are available in all Class::Measure classes.
 
-=head1 METHODS
+# METHODS
 
-=head2 new
+## new
 
-  my $m = new Class::Measure::Length( 1, 'inch' );
+    my $m = new Class::Measure::Length( 1, 'inch' );
 
 Creates a new measurement object.  You must pass an initial 
 measurement and default unit.
 
 In most cases the measurement class that you are useing 
 will export a method to create new measurements. For 
-example L<Class::Measure::Length> exports the 
+example [Class::Measure::Length](https://metacpan.org/pod/Class::Measure::Length) exports the 
 length() method.
 
-=head2 unit
+## unit
 
-  my $unit = $m->unit;
+    my $unit = $m->unit;
 
 Returns the object's default unit.
 
-=head2 set_unit
+## set\_unit
 
-  $m->set_unit( 'feet' );
+    $m->set_unit( 'feet' );
 
 Sets the default unit of the measurement.
 
-=head2 value
+## value
 
-  my $yards = $m->value('yards');
-  my $val = $m->value;
-  print "$m is the same as $val when in a string\n";
+    my $yards = $m->value('yards');
+    my $val = $m->value;
+    print "$m is the same as $val when in a string\n";
 
 Retrieves the value of the measurement in the 
 default unit.  You may specify a unit in which 
@@ -56,74 +56,73 @@ case the value is converted to the unit and returned.
 This method is also used to handle overloading of 
 stringifying the object.
 
-=head2 set_value
+## set\_value
 
-  my $m = length( 0, 'inches' );
-  $m->set_value( 12 ); # 12 inches.
-  $m->set_value( 1, 'foot' ); # 1 foot.
+    my $m = length( 0, 'inches' );
+    $m->set_value( 12 ); # 12 inches.
+    $m->set_value( 1, 'foot' ); # 1 foot.
 
 Sets the measurement in the default unit.  You may 
 specify a new default unit as well.
 
-=head2 reg_units
+## reg\_units
 
-  Class::Measure::Length->reg_units(
-    'inch', 'foot', 'yard'
-  );
+    Class::Measure::Length->reg_units(
+      'inch', 'foot', 'yard'
+    );
 
 Registers one or more units for use in the specified 
 class.  Units should be in the singular, most common, 
 form.
 
-=head2 units
+## units
 
-  my @units = Class::Measure::Length->units();
+    my @units = Class::Measure::Length->units();
 
 Returns a list of all registered units.
 
-=head2 reg_aliases
+## reg\_aliases
 
-  Class::Measure::Length->reg_aliases(
-    ['feet','ft'] => 'foot',
-    ['in','inches'] => 'inch',
-    'yards' => 'yard'
-  );
+    Class::Measure::Length->reg_aliases(
+      ['feet','ft'] => 'foot',
+      ['in','inches'] => 'inch',
+      'yards' => 'yard'
+    );
 
 Register alternate names for units.  Expects two 
 arguments per unit to alias.  The first argument 
 being the alias (scalar) or aliases (array ref), and 
 the second argument being the unit to alias them to.
 
-=head2 reg_convs
+## reg\_convs
 
-  Class::Measure::Length->reg_convs(
-    12, 'inches' => 'foot',
-    'yard' => '3', 'feet'
-  );
+    Class::Measure::Length->reg_convs(
+      12, 'inches' => 'foot',
+      'yard' => '3', 'feet'
+    );
 
 Registers a unit conversion.  There are three distinct 
 ways to specify a new conversion.  Each requires three 
 arguments.
 
-  $count1, $unit1 => $unit2
-  $unit1 => $count2, $unit2
+    $count1, $unit1 => $unit2
+    $unit1 => $count2, $unit2
 
 These first two syntaxes create automatic reverse conversions 
 as well.  So, saying there are 12 inches in a foot implies 
 that there are 1/12 feet in an inch.
 
-  $unit1 => $unit2, $sub
+    $unit1 => $unit2, $sub
 
 The third syntax accepts a subroutine as the last argument 
 the subroutine will be called with the value of $unit1 and 
 it's return value will be assigned to $unit2.  This 
 third syntax does not create a reverse conversion automatically.
 
-=head1 AUTHOR
+# AUTHOR
 
 Aran Clary Deltac <bluefeet@cpan.org>
 
-=head1 LICENSE
+# LICENSE
 
 This library is free software; you can redistribute it and/or modify it under the same terms as Perl itself.
-
