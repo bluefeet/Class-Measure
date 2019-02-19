@@ -42,7 +42,8 @@
       },
       "runtime" : {
          "requires" : {
-            "Sub::Exporter" : "0.982"
+            "Sub::Exporter" : "0.982",
+            "perl" : "5.008001"
          }
       },
       "test" : {
