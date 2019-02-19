@@ -2,7 +2,7 @@ Revision history for Perl extension Class-Measure.
 
 {{$NEXT}}
 
- - Require perl 5.8 per Manilla.
+ - Require perl 5.8 per Minilla.
  - Simplify VERSION declarations.
 
 0.06 2019-02-18T06:26:18Z
