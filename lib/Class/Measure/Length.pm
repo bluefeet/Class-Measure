@@ -1,5 +1,7 @@
 package Class::Measure::Length;
-
+use 5.008001;
+use strict;
+use warnings;
 our $VERSION = '0.06';
 
 =head1 NAME
@@ -11,9 +13,6 @@ Class::Measure::Length - Calculate measurements of length.
 =head1 DESCRIPTION
 
 =cut
-
-use strict;
-use warnings;
 
 use base qw( Class::Measure );
 

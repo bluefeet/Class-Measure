@@ -1,5 +1,7 @@
 package Class::Measure;
-
+use 5.008001;
+use strict;
+use warnings;
 our $VERSION = '0.06';
 
 =head1 NAME
@@ -22,9 +24,6 @@ and L<Class::Measure::Volume> are planned and will be added soon.
 The methods described here are available in all Class::Measure classes.
 
 =cut
-
-use strict;
-use warnings;
 
 use Carp qw( croak );
 
