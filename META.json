@@ -42,6 +42,7 @@
       },
       "runtime" : {
          "requires" : {
+            "Carp" : "0",
             "Sub::Exporter" : "0.982",
             "perl" : "5.008001"
          }

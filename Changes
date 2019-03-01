@@ -2,6 +2,7 @@ Revision history for Perl extension Class-Measure.
 
 {{$NEXT}}
 
+ - Declare Carp dependency.
  - Require perl 5.8.1.
  - Simplify VERSION declarations.
 
