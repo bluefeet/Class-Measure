@@ -15,7 +15,7 @@ eval{ MeasureTest->new };
 ok( $@, 'invalid number of arguments' );
 
 eval{ MeasureTest->new( 2, 'inches' ) };
-ok( $@, 'unkown unit' );
+ok( $@, 'unknown unit' );
 
 MeasureTest->reg_units(
     qw( inch foot yard centimeter meter )

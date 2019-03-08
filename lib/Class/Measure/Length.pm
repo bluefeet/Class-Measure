@@ -4,13 +4,17 @@ use strict;
 use warnings;
 our $VERSION = '0.06';
 
+=encoding utf8
+
 =head1 NAME
 
 Class::Measure::Length - Calculate measurements of length.
 
 =head1 SYNOPSIS
 
-=head1 DESCRIPTION
+    use Class::Measure::Length;
+    
+    print length( 2, 'km' )->meters();
 
 =cut
 
@@ -22,12 +26,12 @@ use Sub::Exporter -setup => {
 
 =head1 METHODS
 
-This module inherits all the methods made available by 
+This module inherits all the methods made available by
 L<Class::Measure>.
 
 =head2 length
 
-  $m = length( 2, 'metres' );
+    $m = length( 2, 'metres' );
 
 Creates a new measurement object.
 
@@ -39,18 +43,18 @@ sub length { return __PACKAGE__->new(@_); }
 
 =head2 International System of Units
 
-Also known as SI and "metric", this unit of measure 
+Also known as SI and "metric", this unit of measure
 includes the following.
 
-  kilometre
-  metre
-  centimetre
-  millimetre
-  decimetre
-  micrometre
-  nanometre
+    kilometre
+    metre
+    centimetre
+    millimetre
+    decimetre
+    micrometre
+    nanometre
 
-And all veriations are aliased, such as "m", "meter", 
+And all veriations are aliased, such as "m", "meter",
 "meters", "metres".
 
 =cut
@@ -78,16 +82,16 @@ __PACKAGE__->reg_convs(
 
 =head2 Shared
 
-These units are shared by with the US and Imperial 
+These units are shared by with the US and Imperial
 unit systems.
 
-  inch
-  foot
-  yard
-  rod
-  mile
-  chain
-  furlong
+    inch
+    foot
+    yard
+    rod
+    mile
+    chain
+    furlong
 
 All relevant aliases included.
 
@@ -121,10 +125,10 @@ __PACKAGE__->reg_convs(
 
 Units specific to the United States.
 
-  survey_mile
-  link
-  fathom
-  cable_length
+    survey_mile
+    link
+    fathom
+    cable_length
 
 Aliases included.
 
@@ -148,7 +152,7 @@ __PACKAGE__->reg_convs(
 
 =head2 Imperial
 
-Imperial (english) units.  The only unit included 
+Imperial (english) units.  The only unit included
 in this set is "league".
 
 =cut
@@ -165,8 +169,8 @@ __PACKAGE__->reg_convs(
 
 =head2 Other
 
-  light_second
-  nautical_mile
+    light_second
+    nautical_mile
 
 =cut
 
@@ -183,12 +187,10 @@ __PACKAGE__->reg_convs(
 );
 
 1;
+__END__
 
-=head1 AUTHOR
+=head1 AUTHORS AND LICENSE
 
-Aran Clary Deltac <bluefeet@cpan.org>
+See L<GIS::Distance/AUTHORS> and L<GIS::Distance/LICENSE>.
 
-=head1 LICENSE
-
-This library is free software; you can redistribute it and/or modify it under the same terms as Perl itself.
-
+=cut
