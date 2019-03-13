@@ -140,7 +140,7 @@ sub set_value {
 =head2 reg_units
 
     Class::Measure::Length->reg_units(
-        'inch', 'foot', 'yard'
+        'inch', 'foot', 'yard',
     );
 
 Registers one or more units for use in the specified
@@ -442,7 +442,7 @@ L<https://github.com/bluefeet/Class-Measure/issues>
 
 =head1 AUTHORS
 
-    Aran Clary Deltac <bluefeet@cpan.org>
+    Aran Clary Deltac <bluefeet@gmail.com>
 
 =head1 LICENSE
 

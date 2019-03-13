@@ -189,8 +189,17 @@ __PACKAGE__->reg_convs(
 1;
 __END__
 
-=head1 AUTHORS AND LICENSE
+=head1 SUPPORT
 
-See L<GIS::Distance/AUTHORS> and L<GIS::Distance/LICENSE>.
+See L<Class::Measure/SUPPORT>.
+
+=head1 AUTHORS
+
+See L<Class::Measure/AUTHORS>.
+
+=head1 LICENSE
+
+See L<Class::Measure/LICENSE>.
 
 =cut
+
