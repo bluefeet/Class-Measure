@@ -302,7 +302,7 @@ sub _conv {
     foreach $unit (@$path){
         my $conv = $units->{$prev_unit}->{$unit};
         if( ref($conv) ){
-            $value = \&{$conv}( $value, $prev_unit, $unit );
+            $value = &{$conv}( $value, $prev_unit, $unit );
         }else{
             $value = $value * $units->{$prev_unit}->{$unit};
         }
