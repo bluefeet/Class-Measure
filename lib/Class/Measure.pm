@@ -28,6 +28,7 @@ The methods described here are available in all Class::Measure classes.
 =cut
 
 use Carp qw( croak );
+use Scalar::Util qw(looks_like_number);
 
 use overload 
     '+'=>\&_ol_add, '-'=>\&_ol_sub, 
@@ -255,13 +256,14 @@ sub reg_convs {
     my $class = ref($self) || $self;
     while(@_){
         my($from,$to,$conv);
-        if( $_[0] =~ /^-?[0-9.]+$/s ){
+        # First check for coderef to avoid seeing units as number in that case:
+        if( ref($_[2]) eq 'CODE' ){
+            ($from,$to,$conv) = splice(@_,0,3);
+        }elsif( looks_like_number($_[0]) ){
             ($conv,$from,$to) = splice(@_,0,3);
             $conv = 1 / $conv;
-        }elsif( $_[1] =~ /^-?[0-9.]+$/s){
+        }elsif( looks_like_number($_[1]) ){
             ($from,$conv,$to) = splice(@_,0,3);
-        }elsif( ref($_[2]) eq 'CODE' ){
-            ($from,$to,$conv) = splice(@_,0,3);
         }else{
             croak('Invalid arguments');
         }
