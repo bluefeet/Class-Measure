@@ -2,6 +2,8 @@ Revision history for Perl extension Class-Measure.
 
 {{$NEXT}}
 
+0.08 2020-08-15T18:23:04Z
+
  - Fixed a bug where conversions using a code ref would return a scalar ref
    instead of the expected scalar.
  - Unit conversions can now be registered with numbers that would have been
