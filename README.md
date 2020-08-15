@@ -4,16 +4,16 @@ Class::Measure - Create, compare, and convert units of measurement.
 
 # SYNOPSIS
 
-See [Class::Measure::Length](https://metacpan.org/pod/Class::Measure::Length) for some examples.
+See [Class::Measure::Length](https://metacpan.org/pod/Class%3A%3AMeasure%3A%3ALength) for some examples.
 
 # DESCRIPTION
 
 This is a base class that is inherited by the Class::Measure 
-classes.  This distribution comes with the class [Class::Measure::Length](https://metacpan.org/pod/Class::Measure::Length).
+classes.  This distribution comes with the class [Class::Measure::Length](https://metacpan.org/pod/Class%3A%3AMeasure%3A%3ALength).
 
-The classes [Class::Measure::Area](https://metacpan.org/pod/Class::Measure::Area), [Class::Measure::Mass](https://metacpan.org/pod/Class::Measure::Mass),
-[Class::Measure::Space](https://metacpan.org/pod/Class::Measure::Space), [Class::Measure::Temperature](https://metacpan.org/pod/Class::Measure::Temperature),
-and [Class::Measure::Volume](https://metacpan.org/pod/Class::Measure::Volume) are planned and will be added soon.
+The classes [Class::Measure::Area](https://metacpan.org/pod/Class%3A%3AMeasure%3A%3AArea), [Class::Measure::Mass](https://metacpan.org/pod/Class%3A%3AMeasure%3A%3AMass),
+[Class::Measure::Space](https://metacpan.org/pod/Class%3A%3AMeasure%3A%3ASpace), [Class::Measure::Temperature](https://metacpan.org/pod/Class%3A%3AMeasure%3A%3ATemperature),
+and [Class::Measure::Volume](https://metacpan.org/pod/Class%3A%3AMeasure%3A%3AVolume) are planned and will be added soon.
 
 The methods described here are available in all Class::Measure classes.
 
@@ -30,7 +30,7 @@ measurement and default unit.
 
 In most cases the measurement class that you are using
 will export a method to create new measurements.  For
-example [Class::Measure::Length](https://metacpan.org/pod/Class::Measure::Length) exports the
+example [Class::Measure::Length](https://metacpan.org/pod/Class%3A%3AMeasure%3A%3ALength) exports the
 `length()` method.
 
 ## unit
@@ -152,6 +152,7 @@ Class-Measure GitHub issue tracker:
 
 ```
 Aran Clary Deltac <bluefeet@gmail.com>
+Roland van Ipenburg <roland@rolandvanipenburg.com>
 ```
 
 # LICENSE

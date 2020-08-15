@@ -445,6 +445,7 @@ L<https://github.com/bluefeet/Class-Measure/issues>
 =head1 AUTHORS
 
     Aran Clary Deltac <bluefeet@gmail.com>
+    Roland van Ipenburg <roland@rolandvanipenburg.com>
 
 =head1 LICENSE
 
