@@ -2,6 +2,8 @@ Revision history for Perl extension Class-Measure.
 
 {{$NEXT}}
 
+0.10 2023-06-07T19:00:47Z
+
  - Do not modify source objects when doing math.
  - Minor metadata and boilerplate updates.
 
